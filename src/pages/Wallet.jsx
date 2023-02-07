@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-vars */
 import React from 'react';
 
@@ -25,7 +26,7 @@ export default function Wallet() {
       <div className="card-container">
         {currency.map((item, index) => {
           return (
-            <div className="card">
+            <div className="card" key={index}>
               <p className="sign">{item.sign} Balance</p>
               <div className="balance">
                 <p>1254</p>
