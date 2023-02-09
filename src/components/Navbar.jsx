@@ -1,8 +1,13 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import styled from 'styled-components';
 import MyContext from '../Context';
+import closeMenu from '../images/close menu icon.png';
+import menuIcon from '../images/menu-icon.svg';
 
 const StyledNavBar = styled.nav`
   background-color: brown;
@@ -10,6 +15,7 @@ const StyledNavBar = styled.nav`
   color: black;
   width: 100%;
   height: fit-content;
+  min-height: 130px;
   font-size: 2rem;
   padding: 5px 2rem;
   position: fixed;
@@ -18,21 +24,17 @@ const StyledNavBar = styled.nav`
   z-index: 3;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 
   p {
     margin: 0;
   }
 
   .ul-container {
-    background-color: grey;
-    border-left: 1px solid grey;
     position: absolute;
     top: 0;
     right: 0;
-    width: 70vw;
-    max-width: 700px;
-    width: 500px;
+    width: 90px;
     height: 100vh;
     padding: 0;
     margin: 0;
@@ -40,41 +42,36 @@ const StyledNavBar = styled.nav`
     transition: 0.5s;
   }
 
-  .varying-ul {
+  .active-ul-container {
+    border-left: 1px solid grey;
+    width: 50vw;
+    max-width: 600px;
+  }
+
+  .ul {
     background-color: brown;
     position: relative;
     width: 100%;
     height: 100%;
     list-style: none;
-    padding: 100px 0 0;
+    padding: 120px 0 0;
     margin: 0;
+    transition: 0.5s;
   }
 
   .active-ul {
-    /* right: -100%;
-    transform: translateX(-50%); */
-    width: 80px;
-    padding-left: 100px;
+    padding-left: 200px;
   }
 
-  .menu-icons {
-    background-color: pink;
+  .menu-btn {
     position: absolute;
     left: 0;
     top: 0;
-    height: 170px;
-  }
-
-  .open-menu {
-    background-color: purple;
-    left: 0;
-    top: 70px;
-  }
-
-  .close-menu {
-    background-color: purple;
-    left: 0;
-    top: 0;
+    height: 70px;
+    width: 70px;
+    margin: 10px;
+    cursor: pointer;
+    transition: 0.5s;
   }
 
   li {
@@ -87,33 +84,79 @@ const StyledNavBar = styled.nav`
 export default function Navbar() {
   const { credentials, defaultBalance } = React.useContext(MyContext);
   const [open, setOpen] = React.useState(false);
+  const [icon, setIcon] = React.useState(menuIcon);
 
-  const toggleNav = () => {
+  const toggleNavAndBtn = () => {
     setOpen((prev) => !prev);
+    setIcon(open ? menuIcon : closeMenu);
   };
 
   return (
     <StyledNavBar>
       <div>
-        <p className="name">{credentials.name}&lsquo;s wallet</p>
-        <p>DefaultTotal: 2,000 {defaultBalance}</p>
+        <p className="name">
+          {credentials.name === 'userName'
+            ? 'User:'
+            : `${credentials.name}'${
+                credentials.name
+                  .charAt(credentials.name.length - 1)
+                  .toLowerCase() === 's'
+                  ? ''
+                  : 's'
+              } Wallet`}
+        </p>
+        <p>
+          DefaultTotal: {credentials.balance} {defaultBalance.sign}
+          {credentials.balance > 700000 ? "c'mon bruh! 😹, Really?" : ''}
+        </p>
       </div>
-      <div className={open ? 'ul-container' : 'ul-container'}>
-        <ul className={open ? 'varying-ul active-ul' : 'varying-ul'}>
-          <div className="menu-icons">
-            <div className="open-menu" onClick={toggleNav}>
-              Open menu
-            </div>
-            <div className="close-menu" onClick={toggleNav}>
-              Close menu
-            </div>
-          </div>
+      <div
+        className={open ? 'active-ul-container ul-container' : 'ul-container'}
+      >
+        <ul className={open ? 'ul' : 'ul active-ul'}>
+          <img
+            className="menu-btn"
+            src={icon}
+            alt="menu_icon "
+            onClick={() => {
+              toggleNavAndBtn();
+            }}
+          />
           <li>Change Default currency</li>
           <li>item 2</li>
           <li>item 3</li>
           <li>item 4</li>
         </ul>
       </div>
+      {/* {credentials.name === 'userName' && (
+        <div className="modal-overlay">
+          <form
+            className={start === 0 ? 'container' : 'container activeform'}
+            onSubmit={(e) => {
+              e.preventDefault();
+              console.clear();
+              handleFormCredentials(
+                e.target.elements.Name.value,
+                e.target.elements.Amount.value
+              );
+            }}
+          >
+            <button className="delet-popUp" type="submit">
+              ADD+
+            </button>
+
+            <label htmlFor="Name">Name:</label>
+            <input type="text" id="Name" placeholder="Enter UserName" />
+
+            <label htmlFor="Amount">Enter amount to topUP In USD:</label>
+            <input
+              type="number"
+              id="Amount"
+              placeholder="EnterAmount to topUP in USD"
+            />
+          </form>
+        </div>
+      )} */}
     </StyledNavBar>
   );
 }

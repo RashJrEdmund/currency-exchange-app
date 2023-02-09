@@ -1,40 +1,54 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable no-unused-vars */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 
-import Container from '../components/styles/Container.styled';
+import StyledContainer from '../components/styles/Container.styled';
+import delIcon from '../images/close menu icon.png';
 import MyContext from '../Context';
 
 export default function Wallet() {
-  const {
-    credentials,
-    setCredentials,
+  const { currency, setCurrency } = React.useContext(MyContext);
 
-    currency,
-    setCurrency,
+  const handleDelete = (valuePopped, name, position) => {
+    const holder = currency;
+    const newHolder = holder.filter(({ id }) => id !== position);
+    // console.log('this is holder and val', holder, val);
+    setCurrency([...newHolder]);
+  };
 
-    defaultBalance,
-    setDefaultBalance,
-  } = React.useContext(MyContext);
-  /* React.useEffect(() => {
-    setTimeout(() => {
-      setCredentials('the useEffect has been ran');
-    }, 3000);
-  }); */
+  // React.useEffect(() => {
+  //   setTimeout(() => {
+  //     setCurrency([...currency, { sign: 'GBP', value: 70, rate: 1 }]);
+  //   }, 3000);
+  // }, []);
+
   return (
-    <Container>
+    <StyledContainer>
       <div className="card-container">
-        {currency.map((item, index) => {
+        {currency.map(({ sign, value, id }, index) => {
           return (
-            <div className="card" key={index}>
-              <p className="sign">{item.sign} Balance</p>
+            <div className="card" key={id}>
+              {index > 2 ? (
+                <img
+                  className="delet-card"
+                  src={delIcon}
+                  alt="delet_card_button"
+                  onClick={() => {
+                    console.clear();
+                    handleDelete(value, sign, id);
+                  }}
+                />
+              ) : (
+                ''
+              )}
+              <p className="sign">{sign} Balance</p>
               <div className="balance">
-                <p>1254</p>
+                <p>{value}</p>
               </div>
             </div>
           );
         })}
       </div>
-    </Container>
+    </StyledContainer>
   );
 }

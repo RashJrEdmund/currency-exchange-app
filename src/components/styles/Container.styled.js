@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-const Container = styled.div`
-  /* background-color: brown;
-  color: black; */
+const StyledContainer = styled.div`
+  /* background-color: brown; */
+  color: black;
   margin: 0 auto;
-  width: 90vw;
+  width: 60vw;
   max-width: 1200px;
   height: fit-content;
   font-size: 2rem;
@@ -16,38 +16,52 @@ const Container = styled.div`
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     padding: 2rem 10px;
-  }
 
-  .card {
-    background-color: #000;
-    color: #fff;
-    width: fit-content;
-    min-width: 300px;
-    height: fit-content;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    margin: 15px;
-    box-shadow: 0 0 10px #000;
-    transition: 0.5s;
-  }
+    .card {
+      position: relative;
+      background-color: #000;
+      color: #fff;
+      width: fit-content;
+      min-width: 300px;
+      height: fit-content;
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      margin: 15px;
+      box-shadow: 0 0 10px #000;
+      cursor: pointer;
+      transition: 0.5s;
 
-  .card:hover {
-    transform: translateY(-10px);
-  }
+      &:hover {
+        transform: scale(1.03);
+      }
 
-  .card .sign {
-    margin: 0;
-    padding: 10px;
-    border-bottom: 2px solid #fff;
-  }
+      .delet-card {
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(50%, -30%);
+        background-color: brown;
+        color: white;
+        height: 40px;
+        width: 40px;
+        border-radius: 50px;
+      }
 
-  .card .balance {
-    padding-left: 10px;
-    font-size: 3rem;
+      .sign {
+        margin: 0;
+        padding: 10px;
+        border-bottom: 2px solid #fff;
+      }
+
+      .balance {
+        padding-left: 10px;
+        font-size: 3rem;
+      }
+    }
   }
 `;
 
-export default Container;
+export default StyledContainer;
