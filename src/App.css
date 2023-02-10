@@ -58,7 +58,7 @@ body {
   transform: translateY(0);
 }
 
-.modal-overlay .container .delet-popUp {
+.modal-overlay .container .app-done-btn {
   position: absolute;
   bottom: 0;
   right: 0;
@@ -69,6 +69,7 @@ body {
   width: fit-content;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .modal-overlay .container label {

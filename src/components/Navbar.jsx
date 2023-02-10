@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-alert */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable no-param-reassign */
@@ -40,6 +42,50 @@ const StyledNavBar = styled.nav`
     margin: 0;
     z-index: 2;
     transition: 0.5s;
+
+    .ul {
+      background-color: brown;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      list-style: none;
+      padding: 120px 0 0;
+      margin: 0;
+      transition: 0.5s;
+
+      .menu-btn {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 70px;
+        width: 70px;
+        margin: 10px;
+        cursor: pointer;
+        transition: 0.5s;
+      }
+
+      li {
+        background-color: green;
+        margin: 0;
+        padding: 1rem 2rem;
+        cursor: pointer;
+      }
+
+      .add-new-currency {
+        background-color: gold;
+        display: flex;
+
+        select {
+          margin: 0 1rem;
+          min-width: 60px;
+          font-size: 1.3rem;
+        }
+      }
+    }
+
+    .active-ul {
+      padding-left: 200px;
+    }
   }
 
   .active-ul-container {
@@ -47,42 +93,11 @@ const StyledNavBar = styled.nav`
     width: 50vw;
     max-width: 600px;
   }
-
-  .ul {
-    background-color: brown;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    list-style: none;
-    padding: 120px 0 0;
-    margin: 0;
-    transition: 0.5s;
-  }
-
-  .active-ul {
-    padding-left: 200px;
-  }
-
-  .menu-btn {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 70px;
-    width: 70px;
-    margin: 10px;
-    cursor: pointer;
-    transition: 0.5s;
-  }
-
-  li {
-    background-color: green;
-    margin: 0;
-    padding: 1rem 2rem;
-  }
 `;
 
 export default function Navbar() {
-  const { credentials } = React.useContext(MyContext);
+  const { currency, setCurrency, credentials, fetchKeys } =
+    React.useContext(MyContext);
   const [open, setOpen] = React.useState(false);
   const [icon, setIcon] = React.useState(menuIcon);
 
@@ -91,23 +106,48 @@ export default function Navbar() {
     setIcon(open ? menuIcon : closeMenu);
   };
 
+  const handleAddCurrency = (newCurr) => {
+    // let isCurr = false;
+    // for (const i of currency) {
+    //   if (i[newCurr]) {
+    //     isCurr = true;
+    //   }
+    // }
+    // if (isCurr) {
+    //   console.log(newCurr, 'already exists');
+    // }
+    setCurrency([
+      ...currency,
+      {
+        sign: newCurr,
+        value: 0,
+        rate: 1,
+        id: currency[currency.length - 1].id + 1,
+      },
+    ]);
+
+    alert(`${newCurr} card added`);
+  };
+
   return (
     <StyledNavBar>
       <div>
         <p className="name">
           {credentials.name === 'userName'
             ? 'User:'
-            : `${credentials.name}'${
+            : `
+              ${credentials.name}'${
                 credentials.name
                   .charAt(credentials.name.length - 1)
                   .toLowerCase() === 's'
                   ? ''
                   : 's'
-              } Wallet`}
+              } Wallet
+            `}
         </p>
         <p>
           DefaultTotal: {credentials.balance} {credentials.baseSign}
-          {credentials.balance > 700000 ? "c'mon bruh! 😹, Really?" : ''}
+          {credentials.balance > 700000 ? " c'mon bruh! 😹, Really?" : ''}
         </p>
       </div>
       <div
@@ -123,10 +163,25 @@ export default function Navbar() {
             }}
           />
           <li>Change Default currency</li>
-          <li>Add New Card</li>
+          <li className="add-new-currency">
+            <p>Add new currencyCard</p>
+            <select
+              name="add-new-currency"
+              id="add-new-currency"
+              onChange={(e) => handleAddCurrency(e.target.value)}
+            >
+              {fetchKeys.map((curr) => (
+                <option value={curr} key={curr}>
+                  {curr}
+                </option>
+              ))}
+            </select>
+          </li>
           <li>Delete All Extra Cards</li>
+          <li>cashOUT</li>
         </ul>
       </div>
+
       {/* {credentials.name === 'userName' && (
         <div className="modal-overlay">
           <form

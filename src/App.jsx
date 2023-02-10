@@ -9,6 +9,21 @@ import Navbar from './components/Navbar';
 // import StyledAppModal from './components/styles/Container.styled';
 
 function App() {
+  const fetchResults = {
+    EUR: 1.5,
+    XAF: 650.4,
+    YEN: 1.2,
+    GBP: 1.7,
+    XOF: 2,
+    AUD: 2.3,
+    GYY: 10,
+    NAI: 500,
+  };
+
+  const fetchKeys = ['USD', ...Object.keys(fetchResults)];
+
+  const addedCurrencies = [...fetchKeys];
+
   const [start, setStart] = React.useState(0);
   setTimeout(() => {
     setStart(1);
@@ -67,6 +82,11 @@ function App() {
         setCredentials,
         currency,
         setCurrency,
+
+        addedCurrencies,
+
+        fetchResults,
+        fetchKeys,
       }}
     >
       <div className="App">
@@ -93,12 +113,17 @@ function App() {
                 );
               }}
             >
-              <button className="delet-popUp" type="submit">
+              <button className="app-done-btn" type="submit">
                 Done
               </button>
 
               <label htmlFor="Name">Name:</label>
-              <input type="text" id="Name" placeholder="Enter UserName" />
+              <input
+                type="text"
+                id="Name"
+                placeholder="Enter UserName"
+                required
+              />
 
               <label htmlFor="Amount">Enter amount to topUP In USD:</label>
               <input

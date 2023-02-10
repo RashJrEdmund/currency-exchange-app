@@ -11,7 +11,7 @@ const StyledContainer = styled.div`
 
   .convert-to-overlay {
     background: #cccccc80;
-    /* position: fixed; */
+    position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
@@ -33,21 +33,32 @@ const StyledContainer = styled.div`
       width: 90vw;
       max-width: 500px;
       height: fit-content;
-      padding: 10px 10px 20px;
+      padding: 1rem;
       border: none;
       border-radius: 10px;
+
+      .close-convert-form {
+        background-color: brown;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transform: translate(50%, -50%);
+        height: 40px;
+        width: 40px;
+        border-radius: 50px;
+        cursor: pointer;
+      }
 
       input {
         height: 30px;
         width: 300px;
         max-width: 90%;
-        margin: 1rem 0;
+        margin: 1rem auto;
         padding: 10px;
         font-size: 1.2rem;
       }
 
       .from-x-to-y {
-        background-color: gold;
         margin: 0;
         display: flex;
         align-items: center;
@@ -59,6 +70,28 @@ const StyledContainer = styled.div`
           width: fit-content;
           height: fit-content;
         }
+
+        select {
+          margin: 0 0 0 10px;
+          height: 30px;
+          min-width: 60px;
+          font-size: 1.1rem;
+        }
+      }
+
+      .wallet-confirm-btn {
+        background-color: brown;
+        color: #fff;
+        font-weight: 700;
+        /* position: absolute; */
+        right: 0;
+        bottom: 0;
+        margin: 1.2rem;
+        height: fit-content;
+        width: fit-content;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
       }
     }
   }
@@ -97,10 +130,10 @@ const StyledContainer = styled.div`
         right: 0;
         transform: translate(50%, -30%);
         background-color: brown;
-        color: white;
         height: 40px;
         width: 40px;
         border-radius: 50px;
+        cursor: pointer;
       }
 
       .sign {
@@ -123,13 +156,18 @@ const StyledContainer = styled.div`
         position: absolute;
         right: 0;
         bottom: 0;
-        margin: 10px;
+        margin: 2rem 10px;
         cursor: pointer;
+        opacity: 0;
         transition: 0.5s;
       }
 
       .convert-to:hover {
         transform: scale(1.05);
+      }
+
+      &:hover .convert-to {
+        opacity: 1;
       }
     }
   }
