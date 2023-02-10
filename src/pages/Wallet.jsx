@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
@@ -9,7 +10,7 @@ import MyContext from '../Context';
 export default function Wallet() {
   const { currency, setCurrency } = React.useContext(MyContext);
 
-  const handleDelete = (valuePopped, name, position) => {
+  const handleDelete = (position) => {
     const holder = currency;
     const newHolder = holder.filter(({ id }) => id !== position);
     // console.log('this is holder and val', holder, val);
@@ -24,6 +25,23 @@ export default function Wallet() {
 
   return (
     <StyledContainer>
+      <div className="convert-to-overlay">
+        <form className="wallet-form">
+          <input
+            type="number"
+            placeholder="type in Amount To Convert"
+            // value={20}
+          />
+          <div className="from-x-to-y">
+            <p>convet amount from USD to : </p>
+            <select name="currencies" id="currency-dropDown">
+              <option value="USD">USD</option>
+              <option value="XAF">XAF</option>
+              <option value="EUR">EUR</option>
+            </select>
+          </div>
+        </form>
+      </div>
       <div className="card-container">
         {currency.map(({ sign, value, id }, index) => {
           return (
@@ -34,8 +52,8 @@ export default function Wallet() {
                   src={delIcon}
                   alt="delet_card_button"
                   onClick={() => {
-                    console.clear();
-                    handleDelete(value, sign, id);
+                    // console.clear();
+                    handleDelete(id);
                   }}
                 />
               ) : (
@@ -45,6 +63,14 @@ export default function Wallet() {
               <div className="balance">
                 <p>{value}</p>
               </div>
+              <button
+                type="button"
+                className="convert-to"
+                name={sign}
+                onClick={(e) => console.log(e.target.name, 'was click')}
+              >
+                Convert To
+              </button>
             </div>
           );
         })}

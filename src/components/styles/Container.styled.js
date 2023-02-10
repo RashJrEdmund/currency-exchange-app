@@ -9,6 +9,60 @@ const StyledContainer = styled.div`
   height: fit-content;
   font-size: 2rem;
 
+  .convert-to-overlay {
+    background: #cccccc80;
+    /* position: fixed; */
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 4;
+
+    .wallet-form {
+      position: relative;
+      background-color: #000000a2;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 90vw;
+      max-width: 500px;
+      height: fit-content;
+      padding: 10px 10px 20px;
+      border: none;
+      border-radius: 10px;
+
+      input {
+        height: 30px;
+        width: 300px;
+        max-width: 90%;
+        margin: 1rem 0;
+        padding: 10px;
+        font-size: 1.2rem;
+      }
+
+      .from-x-to-y {
+        background-color: gold;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        flex-wrap: nowrap;
+
+        p {
+          margin: 0;
+          font-size: 1.4rem;
+          width: fit-content;
+          height: fit-content;
+        }
+      }
+    }
+  }
+
   .card-container {
     /* background-color: navajowhite; */
     width: 100%;
@@ -31,7 +85,6 @@ const StyledContainer = styled.div`
       flex-direction: column;
       margin: 15px;
       box-shadow: 0 0 10px #000;
-      cursor: pointer;
       transition: 0.5s;
 
       &:hover {
@@ -59,6 +112,24 @@ const StyledContainer = styled.div`
       .balance {
         padding-left: 10px;
         font-size: 3rem;
+      }
+
+      .convert-to {
+        border: none;
+        width: fit-content;
+        height: fit-content;
+        padding: 5px;
+        border-radius: 5px;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        margin: 10px;
+        cursor: pointer;
+        transition: 0.5s;
+      }
+
+      .convert-to:hover {
+        transform: scale(1.05);
       }
     }
   }

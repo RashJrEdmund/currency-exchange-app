@@ -82,7 +82,7 @@ const StyledNavBar = styled.nav`
 `;
 
 export default function Navbar() {
-  const { credentials, defaultBalance } = React.useContext(MyContext);
+  const { credentials } = React.useContext(MyContext);
   const [open, setOpen] = React.useState(false);
   const [icon, setIcon] = React.useState(menuIcon);
 
@@ -106,7 +106,7 @@ export default function Navbar() {
               } Wallet`}
         </p>
         <p>
-          DefaultTotal: {credentials.balance} {defaultBalance.sign}
+          DefaultTotal: {credentials.balance} {credentials.baseSign}
           {credentials.balance > 700000 ? "c'mon bruh! 😹, Really?" : ''}
         </p>
       </div>
@@ -123,9 +123,8 @@ export default function Navbar() {
             }}
           />
           <li>Change Default currency</li>
-          <li>item 2</li>
-          <li>item 3</li>
-          <li>item 4</li>
+          <li>Add New Card</li>
+          <li>Delete All Extra Cards</li>
         </ul>
       </div>
       {/* {credentials.name === 'userName' && (

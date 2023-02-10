@@ -17,53 +17,48 @@ function App() {
   const [credentials, setCredentials] = React.useState({
     name: 'userName',
     balance: 0,
+    baseSign: 'USD',
   });
 
   const [currency, setCurrency] = React.useState([
-    { sign: 'USD', value: 5000, rate: 1, id: 0 },
-    { sign: 'XFA', value: 15000, rate: 1, id: 1 },
-    { sign: 'EUR', value: 73000, rate: 1, id: 2 },
-    { sign: 'YEN', value: 1200, rate: 1, id: 3 },
-    { sign: 'GBP', value: 70, rate: 1, id: 4 },
-    { sign: 'XOF', value: 73000, rate: 1, id: 5 },
-    { sign: 'AUD', value: 1200, rate: 1, id: 6 },
-    { sign: 'GYY', value: 70, rate: 1, id: 7 },
+    { sign: 'USD', value: 0, rate: 1, id: 0 },
+    { sign: 'XFA', value: 0, rate: 1, id: 1 },
+    { sign: 'EUR', value: 0, rate: 1, id: 2 },
+    // { sign: 'YEN', value: 1200, rate: 1, id: 3 },
+    // { sign: 'GBP', value: 70, rate: 1, id: 4 },
+    // { sign: 'XOF', value: 73000, rate: 1, id: 5 },
+    // { sign: 'AUD', value: 1200, rate: 1, id: 6 },
+    // { sign: 'GYY', value: 70, rate: 1, id: 7 },
   ]);
 
   const handleFormCredentials = (sonNom, Cash) => {
     setCredentials({
       name: sonNom,
       balance: Cash,
+      baseSign: 'USD',
     });
+
+    setCurrency([
+      { sign: 'USD', value: Cash, rate: 1, id: 0 },
+      { sign: 'XFA', value: 0, rate: 1, id: 1 },
+      { sign: 'EUR', value: 0, rate: 1, id: 2 },
+    ]);
   };
 
-  const getTotal = () => {
-    let results = 0;
-    for (const i of currency) {
-      results += i.value;
-    }
-    return results;
-  };
-
-  const TOTAL = getTotal();
-
-  const [defaultBalance, setDefaultBalance] = React.useState({
-    sign: 'USD',
-    total: TOTAL,
-  });
-
-  // const reduceCurrency = () => {
-  //   return currency.reduce((accumulator, eachObj, counter) => {
-  //     console.log('this the accumulator', accumulator);
-  //     console.log('this is the eachObj', eachObj);
-  //     console.log('this is third param', counter);
-  //     // currency[counter - 1].value +=
-  //     return accumulator + eachObj.value;
-  //   });
+  // const getTotal = () => {
+  //   let results = 0;
+  //   for (const i of currency) {
+  //     results += i.value;
+  //   }
+  //   return results;
   // };
-  // console.log('this the results of reduceCurrency', reduceCurrency());
 
-  // // console.log('this is reduceCurrency', reduceCurrency());
+  // const TOTAL = getTotal();
+
+  // const [defaultBalance, setDefaultBalance] = React.useState({
+  //   sign: 'USD',
+  //   total: TOTAL,
+  // });
 
   return (
     <MyContext.Provider
@@ -72,10 +67,6 @@ function App() {
         setCredentials,
         currency,
         setCurrency,
-        defaultBalance,
-        setDefaultBalance,
-
-        getTotal,
       }}
     >
       <div className="App">
@@ -98,7 +89,7 @@ function App() {
                 console.clear();
                 handleFormCredentials(
                   e.target.elements.Name.value,
-                  e.target.elements.Amount.value
+                  +e.target.elements.Amount.value
                 );
               }}
             >

@@ -24,8 +24,8 @@ body {
 }
 
 .modal-overlay {
-  background: rgba(204, 204, 204, 0.5);
-  position: absolute;
+  background: #cccccc80;
+  position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
@@ -39,8 +39,7 @@ body {
 }
 
 .modal-overlay .container {
-  position: relative;
-  background-color: #000;
+  background-color: #000000a2;
   color: #fff;
   display: flex;
   flex-direction: column;
