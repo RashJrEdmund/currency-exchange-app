@@ -9,9 +9,6 @@ body {
 }
 
 .App {
-  position: fixed;
-  top: 0;
-  left: 0;
   padding: 0;
   margin: 135px 0 0;
   width: 100%;
@@ -22,6 +19,7 @@ body {
   /* align-items: center;
   justify-content: center; */
 }
+
 
 .modal-overlay {
   background: #cccccc80;
@@ -36,6 +34,7 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 4;
+  cursor: not-allowed;
 }
 
 .modal-overlay .container {
@@ -51,6 +50,7 @@ body {
   border: none;
   border-radius: 10px;
   transform: translateY(-1000%);
+  cursor: default;
   transition: 0.5s;
 }
 

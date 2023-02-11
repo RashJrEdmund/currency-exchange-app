@@ -6,6 +6,8 @@ import React from 'react';
 import Wallet from './pages/Wallet';
 import MyContext from './Context';
 import Navbar from './components/Navbar';
+
+// import Fetchdata from './data/Fetchdata';
 // import StyledAppModal from './components/styles/Container.styled';
 
 function App() {
@@ -17,12 +19,19 @@ function App() {
     XOF: 2,
     AUD: 2.3,
     GYY: 10,
-    NAI: 500,
+    NGN: 500,
   };
 
   const fetchKeys = ['USD', ...Object.keys(fetchResults)];
 
-  const addedCurrencies = [...fetchKeys];
+  // let fetchResults = 0;
+
+  // React.useEffect(() => {
+  //   Fetchdata
+  //     .then((res) => fetchResults = res)
+  //     .catch((error) => console.error("error Caught:", error))
+
+  // }, [])
 
   const [start, setStart] = React.useState(0);
   setTimeout(() => {
@@ -34,6 +43,18 @@ function App() {
     balance: 0,
     baseSign: 'USD',
   });
+
+  const [showForm, setShowForm] = React.useState(true);
+
+  const toggleTopUpForm = () => {
+    setShowForm((prev) => !prev);
+  };
+
+  const [addedCurr, setAddedCurr] = React.useState([
+    { sign: 'USD', amount: 0, id: 0 },
+    { sign: 'XAF', amount: 0, id: 1 },
+    { sign: 'EUR', amount: 0, id: 2 },
+  ]);
 
   const [currency, setCurrency] = React.useState([
     { sign: 'USD', value: 0, rate: 1, id: 0 },
@@ -49,15 +70,17 @@ function App() {
   const handleFormCredentials = (sonNom, Cash) => {
     setCredentials({
       name: sonNom,
-      balance: Cash,
+      balance: credentials.balance + Cash,
       baseSign: 'USD',
     });
 
-    setCurrency([
-      { sign: 'USD', value: Cash, rate: 1, id: 0 },
-      { sign: 'XFA', value: 0, rate: 1, id: 1 },
-      { sign: 'EUR', value: 0, rate: 1, id: 2 },
+    setAddedCurr([
+      { sign: 'USD', amount: addedCurr[0].amount + Cash, id: 0 },
+      { sign: 'XAF', amount: 0, id: 1 },
+      { sign: 'EUR', amount: 0, id: 2 },
     ]);
+
+    toggleTopUpForm();
   };
 
   // const getTotal = () => {
@@ -80,13 +103,15 @@ function App() {
       value={{
         credentials,
         setCredentials,
+
         currency,
         setCurrency,
 
-        addedCurrencies,
+        addedCurr,
+        setAddedCurr,
 
-        fetchResults,
         fetchKeys,
+        toggleTopUpForm,
       }}
     >
       <div className="App">
@@ -100,7 +125,7 @@ function App() {
           </div>
           <p>this a test message</p>
         </StyledAppModal> */}
-        {credentials.name === 'userName' && (
+        {showForm && (
           <div className="modal-overlay">
             <form
               className={start === 0 ? 'container' : 'container activeform'}
@@ -117,11 +142,15 @@ function App() {
                 Done
               </button>
 
+              <p>Confirm Credentials</p>
               <label htmlFor="Name">Name:</label>
               <input
                 type="text"
                 id="Name"
                 placeholder="Enter UserName"
+                defaultValue={
+                  credentials.name === 'userName' ? undefined : credentials.name
+                }
                 required
               />
 
