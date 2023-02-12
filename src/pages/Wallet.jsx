@@ -86,13 +86,6 @@ export default function Wallet() {
 
     // setAddedCurr([...holder]);
     // console.log('new addedCurr', addedCurr);
-
-    // setAddedCurr([
-    //   { sign: 'USD', amount: addedCurr.amount, id: 0 },
-    //   { sign: 'XFA', amount: addedCurr.amount, id: 1 },
-    //   { sign: 'EUR', amount: addedCurr.amount, id: 2 },
-    // ]);
-
     toggleConvertForm();
   };
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable react/jsx-no-constructed-context-values */
@@ -31,6 +32,9 @@ function App() {
       .then((res) => {
         if (res.USD !== 1 && typeof res !== 'object') {
           // meaning if results not found setFetch... shld set to BackupFetc...
+          alert(
+            'Unable to fetch data, Resolving to BackUpData (BackUpData is not upToDate)'
+          );
 
           setFetchResulst(BackUpFetchData);
         } else {
@@ -39,6 +43,7 @@ function App() {
       })
       .catch(() => {
         setFetchResulst(BackUpFetchData);
+        alert('Unable to fetch data, check Internet connection and Try again');
       });
   }, []);
 
