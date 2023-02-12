@@ -164,7 +164,7 @@ export default function Wallet() {
               )}
               <p className="sign">{sign} Balance</p>
               <div className="balance">
-                <p>{amount.toFixed(3)}</p>
+                <p>{amount.toFixed(5)}</p>
               </div>
               <button
                 type="button"

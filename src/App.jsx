@@ -7,15 +7,14 @@ import Wallet from './pages/Wallet';
 import MyContext from './Context';
 import Navbar from './components/Navbar';
 
-// import Fetchdata from './data/Fetchdata';
-// import StyledAppModal from './components/styles/Container.styled';
+import Fetchdata, { BackUpFetchData } from './data/Fetchdata';
 
 function App() {
-  const fetchResults = {
+  const [fetchResults, setFetchResulst] = React.useState({
     USD: 1,
     EUR: 0.935,
-    XAF: 650.4,
-    YEN: 131.42,
+    XAF: 614.3,
+    JPY: 131.42,
     GBP: 0.83,
     XOF: 612.9,
     AUD: 1.45,
@@ -23,18 +22,25 @@ function App() {
     NGN: 459.49,
     GHN: 12.2,
     SGD: 1.33,
-  };
+  });
 
   const fetchKeys = [...Object.keys(fetchResults)];
 
-  // let fetchResults = 0;
+  React.useEffect(() => {
+    Fetchdata()
+      .then((res) => {
+        if (res.USD !== 1 && typeof res !== 'object') {
+          // meaning if results not found setFetch... shld set to BackupFetc...
 
-  // React.useEffect(() => {
-  //   Fetchdata
-  //     .then((res) => fetchResults = res)
-  //     .catch((error) => console.error("error Caught:", error))
-
-  // }, [])
+          setFetchResulst(BackUpFetchData);
+        } else {
+          setFetchResulst(res);
+        }
+      })
+      .catch(() => {
+        setFetchResulst(BackUpFetchData);
+      });
+  }, []);
 
   const [start, setStart] = React.useState(0);
   setTimeout(() => {
@@ -60,44 +66,30 @@ function App() {
   ]);
 
   const handleFormCredentials = (sonNom, Cash) => {
+    const FROM = credentials.baseSign;
+
+    const CASH = (Cash / fetchResults[FROM]) * fetchResults[FROM];
+
     setCredentials({
       name: sonNom,
-      balance: credentials.balance + Cash,
+      balance: credentials.balance + CASH,
       baseSign: credentials.baseSign,
     });
 
-    setAddedCurr([
-      { sign: 'USD', amount: addedCurr[0].amount + Cash, id: 0 },
-      { sign: 'XAF', amount: 0, id: 1 },
-      { sign: 'EUR', amount: 0, id: 2 },
-    ]);
+    setAddedCurr(() => {
+      const HOLDER = addedCurr;
 
-    // console.log('this addedCurr b4 and cash', addedCurr, Cash);
-    // setAddedCurr(() => {
-    //   const HOLDER = addedCurr;
-    //   console.log('this HOLDER', HOLDER);
+      for (const i of HOLDER) {
+        if (i.sign === credentials.baseSign) {
+          i.amount += CASH / 2;
+        }
+      }
 
-    //   HOLDER[0].amount = credentials.balance;
-    //   return [...HOLDER];
-    // });
+      return [...HOLDER];
+    });
 
     toggleTopUpForm();
   };
-
-  // const getTotal = () => {
-  //   let results = 0;
-  //   for (const i of currency) {
-  //     results += i.value;
-  //   }
-  //   return results;
-  // };
-
-  // const TOTAL = getTotal();
-
-  // const [defaultBalance, setDefaultBalance] = React.useState({
-  //   sign: 'USD',
-  //   total: TOTAL,
-  // });
 
   return (
     <MyContext.Provider
@@ -115,16 +107,6 @@ function App() {
       }}
     >
       <div className="App">
-        {/* <StyledAppModal>
-          <div className="container">
-            <label htmlFor="name">Name:</label>
-            <input type="text" id="name" />
-
-            <label htmlFor="amount">Enter amount to topUP:</label>
-            <input type="text" id="amount" />
-          </div>
-          <p>this a test message</p>
-        </StyledAppModal> */}
         {showForm && (
           <div className="modal-overlay">
             <form
@@ -153,11 +135,14 @@ function App() {
                 required
               />
 
-              <label htmlFor="Amount">Enter amount to topUP In USD:</label>
+              <label htmlFor="Amount">
+                Enter amount to topUP In {credentials.baseSign}:
+              </label>
               <input
                 type="number"
+                step="any"
                 id="Amount"
-                placeholder="EnterAmount to topUP in USD"
+                placeholder={`EnterAmount to topUP in ${credentials.baseSign}`}
               />
             </form>
           </div>

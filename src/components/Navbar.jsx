@@ -50,8 +50,6 @@ export default function Navbar() {
   };
 
   const handleAddCurrency = (newCurr) => {
-    // console.clear();
-
     for (const i of addedCurr) {
       if (i.sign.includes(newCurr)) {
         alert(`A ${newCurr} card already exist`);
