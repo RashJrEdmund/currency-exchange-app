@@ -135,7 +135,7 @@ export default function Navbar() {
               toggleNavAndBtn();
             }}
           >
-            toUp
+            topUp
           </li>
           <li>cashOUT</li>
         </ul>
