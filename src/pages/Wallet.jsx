@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-alert */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -12,29 +14,33 @@ import delIcon from '../images/close menu icon.png';
 import MyContext from '../Context';
 
 export default function Wallet() {
-  const { addedCurr, setAddedCurr } = React.useContext(MyContext);
+  const { fetchResults, credentials, addedCurr, setAddedCurr } =
+    React.useContext(MyContext);
 
   const [showForm, setShowForm] = React.useState(false);
   const [convertTo, setConvertTo] = React.useState({
     amount: 0,
-    from: 'USD',
+    from: credentials.baseSign,
   });
 
   const handleDelete = (ID, delBtnId, deletedAmount = 0) => {
-    console.log(ID, deletedAmount, 'was cleard');
+    console.log(delBtnId, deletedAmount, 'was cleard');
     const holder = addedCurr;
     const newHolder = holder.filter(({ id }) => id !== ID);
     setAddedCurr([...newHolder]);
 
     if (deletedAmount > 0) {
-      const Holder = addedCurr;
+      // const Holder = addedCurr;
 
-      Holder[0].amount += deletedAmount;
-      console.log('this Holder', Holder);
+      // Holder[0].amount += deletedAmount;
+      // setAddedCurr(...Holder);
+
+      setAddedCurr((prevCurr) => {
+        prevCurr[0].amount += deletedAmount;
+        return [...prevCurr];
+      });
 
       alert(`${delBtnId} card's amount added to default currency`);
-
-      // setAddedCurr(...Holder);
     }
   };
 
@@ -53,7 +59,7 @@ export default function Wallet() {
     });
   };
 
-  const handleFormSubmit = (currSign) => {
+  const handleConversion = (currSign) => {
     console.clear();
     console.log(
       'convert',
@@ -68,13 +74,24 @@ export default function Wallet() {
 
     for (const i of holder) {
       if (i.sign === convertTo.from) {
+        if (i.amount < convertTo.amount) {
+          alert(`insuficient funds in ${i.sign} Card`);
+          return;
+        }
+        if (i.sign === currSign) {
+          alert(
+            `redundant conversion: will not convert from ${currSign} to ${currSign}`
+          );
+          return;
+        }
         i.amount -= convertTo.amount;
       }
       if (i.sign === currSign) {
-        i.amount += convertTo.amount;
-      }
-      if (addedCurr.indexOf(i) === addedCurr.length - 1) {
-        console.log('loop done: this holder', holder);
+        const RESULTS =
+          (convertTo.amount / fetchResults[convertTo.from]) *
+          fetchResults[currSign];
+
+        i.amount += RESULTS;
       }
     }
 
@@ -90,12 +107,6 @@ export default function Wallet() {
     toggleConvertForm();
   };
 
-  // React.useEffect(() => {
-  //   setTimeout(() => {
-  //     setCurrency([...currency, { sign: 'GBP', value: 70, rate: 1 }]);
-  //   }, 3000);
-  // }, []);
-
   return (
     <StyledContainer>
       {showForm && (
@@ -105,7 +116,7 @@ export default function Wallet() {
             className="wallet-form"
             onSubmit={(e) => {
               e.preventDefault();
-              handleFormSubmit(
+              handleConversion(
                 e.target.children.fromXToY.children.currency_dropDown.value
               );
             }}
@@ -118,6 +129,7 @@ export default function Wallet() {
             />
             <input
               type="number"
+              step="any"
               id="inputID"
               placeholder="type in Amount To Convert"
               onChange={(e) => handleFormInputChange(+e.target.value)}
@@ -163,7 +175,7 @@ export default function Wallet() {
               )}
               <p className="sign">{sign} Balance</p>
               <div className="balance">
-                <p>{amount}</p>
+                <p>{amount.toFixed(5)}</p>
               </div>
               <button
                 type="button"

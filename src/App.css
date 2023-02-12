@@ -9,8 +9,7 @@ body {
 }
 
 .App {
-  padding: 0;
-  margin: 135px 0 0;
+  padding: 135px 0 0;
   width: 100%;
   height: fit-content;
   min-height: 100vh;

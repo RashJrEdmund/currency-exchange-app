@@ -12,17 +12,20 @@ import Navbar from './components/Navbar';
 
 function App() {
   const fetchResults = {
-    EUR: 1.5,
+    USD: 1,
+    EUR: 0.935,
     XAF: 650.4,
-    YEN: 1.2,
-    GBP: 1.7,
-    XOF: 2,
-    AUD: 2.3,
-    GYY: 10,
-    NGN: 500,
+    YEN: 131.42,
+    GBP: 0.83,
+    XOF: 612.9,
+    AUD: 1.45,
+    GYD: 210.92,
+    NGN: 459.49,
+    GHN: 12.2,
+    SGD: 1.33,
   };
 
-  const fetchKeys = ['USD', ...Object.keys(fetchResults)];
+  const fetchKeys = [...Object.keys(fetchResults)];
 
   // let fetchResults = 0;
 
@@ -56,29 +59,29 @@ function App() {
     { sign: 'EUR', amount: 0, id: 2 },
   ]);
 
-  const [currency, setCurrency] = React.useState([
-    { sign: 'USD', value: 0, rate: 1, id: 0 },
-    { sign: 'XFA', value: 0, rate: 1, id: 1 },
-    { sign: 'EUR', value: 0, rate: 1, id: 2 },
-    // { sign: 'YEN', value: 1200, rate: 1, id: 3 },
-    // { sign: 'GBP', value: 70, rate: 1, id: 4 },
-    // { sign: 'XOF', value: 73000, rate: 1, id: 5 },
-    // { sign: 'AUD', value: 1200, rate: 1, id: 6 },
-    // { sign: 'GYY', value: 70, rate: 1, id: 7 },
-  ]);
-
   const handleFormCredentials = (sonNom, Cash) => {
     setCredentials({
       name: sonNom,
       balance: credentials.balance + Cash,
-      baseSign: 'USD',
+      baseSign: credentials.baseSign,
     });
+
+    console.log('this credentials', credentials);
 
     setAddedCurr([
       { sign: 'USD', amount: addedCurr[0].amount + Cash, id: 0 },
       { sign: 'XAF', amount: 0, id: 1 },
       { sign: 'EUR', amount: 0, id: 2 },
     ]);
+
+    // console.log('this addedCurr b4 and cash', addedCurr, Cash);
+    // setAddedCurr(() => {
+    //   const HOLDER = addedCurr;
+    //   console.log('this HOLDER', HOLDER);
+
+    //   HOLDER[0].amount = credentials.balance;
+    //   return [...HOLDER];
+    // });
 
     toggleTopUpForm();
   };
@@ -101,11 +104,10 @@ function App() {
   return (
     <MyContext.Provider
       value={{
+        fetchResults,
+
         credentials,
         setCredentials,
-
-        currency,
-        setCurrency,
 
         addedCurr,
         setAddedCurr,

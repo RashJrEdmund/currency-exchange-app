@@ -15,10 +15,13 @@ const StyledNavBar = styled.nav`
   z-index: 3;
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
 
-  p {
+  .credentials {
     margin: 0;
+
+    p {
+      margin: 0;
+    }
   }
 
   .ul-container {
@@ -34,6 +37,7 @@ const StyledNavBar = styled.nav`
 
     .ul {
       background-color: brown;
+      border: 1px solid #cccccc80;
       position: relative;
       width: 100%;
       height: 100%;
@@ -48,16 +52,25 @@ const StyledNavBar = styled.nav`
         top: 0;
         height: 70px;
         width: 70px;
-        margin: 10px;
+        margin: 20px 10px 0;
         cursor: pointer;
         transition: 0.5s;
       }
 
       li {
-        background-color: green;
+        border-bottom: 1px solid #cccccc80;
+        height: fit-content;
         margin: 0;
         padding: 1rem 2rem;
-        cursor: pointer;
+
+        &,
+        label {
+          cursor: pointer;
+        }
+
+        &:nth-of-type(1) {
+          border-top: 1px solid #cccccc80;
+        }
       }
 
       li:nth-of-type(1),
@@ -65,14 +78,18 @@ const StyledNavBar = styled.nav`
         cursor: not-allowed;
       }
 
+      .change-default,
       .add-new-currency {
-        background-color: gold;
         display: flex;
+        align-items: center;
 
         select {
+          background-color: #ccc;
           margin: 0 1rem;
-          min-width: 60px;
+          min-width: 70px;
+          max-height: 50px;
           font-size: 1.3rem;
+          cursor: pointer;
         }
       }
     }
@@ -83,9 +100,56 @@ const StyledNavBar = styled.nav`
   }
 
   .active-ul-container {
-    border-left: 1px solid grey;
     width: 50vw;
     max-width: 600px;
+  }
+
+  @media only screen and (max-width: 768px) {
+    font-size: 1.5rem;
+    padding: 5px 1rem;
+
+    .credentials {
+      max-width: 270px;
+    }
+
+    .ul-container {
+      width: 0;
+
+      .ul {
+        .menu-btn {
+          height: 50px;
+          width: 50px;
+          margin: 20px 15px 0 0;
+          transform: translateX(-120%);
+        }
+
+        .active-menu-btn {
+          transform: translate(0);
+        }
+
+        li {
+          font-size: 1.2rem;
+          padding: 1rem 12px;
+        }
+
+        .change-default,
+        .add-new-currency {
+          select {
+            background-color: #ccc;
+            margin: 0 0 0 10px;
+            cursor: pointer;
+          }
+        }
+      }
+
+      .active-ul {
+        padding-left: 200px;
+      }
+    }
+
+    .active-ul-container {
+      width: 70vw;
+    }
   }
 `;
 

@@ -1,13 +1,15 @@
 import styled from 'styled-components';
 
 const StyledContainer = styled.div`
-  /* background-color: brown; */
   color: black;
   margin: 0 auto;
   width: 60vw;
   max-width: 1200px;
   height: fit-content;
   font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   .convert-to-overlay {
     background: #cccccc80;
@@ -83,7 +85,6 @@ const StyledContainer = styled.div`
         background-color: brown;
         color: #fff;
         font-weight: 700;
-        /* position: absolute; */
         right: 0;
         bottom: 0;
         margin: 1.2rem;
@@ -97,21 +98,18 @@ const StyledContainer = styled.div`
   }
 
   .card-container {
-    /* background-color: navajowhite; */
-    width: 100%;
+    width: fit-content;
     height: fit-content;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    /* justify-content: space-between; */
     padding: 2rem 10px;
 
     .card {
       position: relative;
       background-color: #000;
       color: #fff;
-      width: fit-content;
-      min-width: 300px;
+      width: 300px;
       height: fit-content;
       border-radius: 15px;
       display: flex;
@@ -119,6 +117,8 @@ const StyledContainer = styled.div`
       margin: 15px;
       box-shadow: 0 0 10px #000;
       transition: 0.5s;
+      word-wrap: break-word;
+      word-break: break-all;
 
       &:hover {
         transform: scale(1.03);
@@ -156,7 +156,7 @@ const StyledContainer = styled.div`
         position: absolute;
         right: 0;
         bottom: 0;
-        margin: 2rem 10px;
+        margin: 1rem 10px;
         cursor: pointer;
         opacity: 0;
         transition: 0.5s;
@@ -168,6 +168,20 @@ const StyledContainer = styled.div`
 
       &:hover .convert-to {
         opacity: 1;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    .card-container {
+      .card {
+        &:hover {
+          transform: scale(1);
+        }
+
+        .convert-to {
+          opacity: 1;
+        }
       }
     }
   }

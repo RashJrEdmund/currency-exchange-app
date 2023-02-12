@@ -12,8 +12,15 @@ import closeMenu from '../images/close menu icon.png';
 import menuIcon from '../images/menu-icon.svg';
 
 export default function Navbar() {
-  const { credentials, fetchKeys, addedCurr, setAddedCurr, toggleTopUpForm } =
-    React.useContext(MyContext);
+  const {
+    credentials,
+    setCredentials,
+    fetchKeys,
+    fetchResults,
+    addedCurr,
+    setAddedCurr,
+    toggleTopUpForm,
+  } = React.useContext(MyContext);
   const [open, setOpen] = React.useState(false);
   const [icon, setIcon] = React.useState(menuIcon);
 
@@ -22,8 +29,29 @@ export default function Navbar() {
     setIcon(open ? menuIcon : closeMenu);
   };
 
+  const handleChangeDefault = (e) => {
+    // console.log('handleChangeDefault entered');
+    // const prevCred = credentials;
+    // prevCred.baseSign = e;
+    // console.log('this prev', prevCred);
+    // console.log('this credentials b4 setCre', credentials);
+    // setCredentials(prevCred);
+
+    const from = credentials.baseSign;
+    const AMT = credentials.balance;
+
+    const RESULTS = (AMT / fetchResults[from]) * fetchResults[e];
+
+    setCredentials((prevCred) => {
+      prevCred.baseSign = e;
+      prevCred.balance = RESULTS;
+      return prevCred;
+    });
+  };
+
   const handleAddCurrency = (newCurr) => {
-    console.clear();
+    // console.clear();
+    console.log('this credentials in handlecur()', credentials);
 
     for (const i of addedCurr) {
       if (i.sign.includes(newCurr)) {
@@ -46,7 +74,7 @@ export default function Navbar() {
 
   return (
     <StyledNavBar>
-      <div>
+      <div className="credentials">
         <p className="name">
           {credentials.name === 'userName'
             ? 'User:'
@@ -62,7 +90,7 @@ export default function Navbar() {
         </p>
         <p>
           DefaultTotal: {credentials.balance} {credentials.baseSign}
-          {credentials.balance > 700000 ? " c'mon bruh! 😹, Really?" : ''}
+          {/* {credentials.balance > 700000 ? " c'mon bruh! 😹, Really?" : ''} */}
         </p>
       </div>
       <div
@@ -70,19 +98,31 @@ export default function Navbar() {
       >
         <ul className={open ? 'ul' : 'ul active-ul'}>
           <img
-            className="menu-btn"
+            className={open ? 'menu-btn active-menu-btn' : 'menu-btn'}
             src={icon}
             alt="menu_icon "
             onClick={() => {
               toggleNavAndBtn();
             }}
           />
-          <li>Change Default currency</li>
+          <li className="change-default">
+            <label htmlFor="changeDef">Change Default currency :</label>
+            <select
+              name="currencies"
+              onChange={(e) => handleChangeDefault(e.target.value)}
+            >
+              {addedCurr.map(({ sign, id }) => (
+                <option value={sign} key={id}>
+                  {sign}
+                </option>
+              ))}
+            </select>
+          </li>
           <li className="add-new-currency">
-            <p>Add new currencyCard</p>
+            <label htmlFor="add_new_currency">Add new currencyCard : </label>
             <select
               name="add-new-currency"
-              id="add-new-currency"
+              id="add_new_currency"
               onChange={(e) => handleAddCurrency(e.target.value)}
             >
               {fetchKeys.map((curr) => (
