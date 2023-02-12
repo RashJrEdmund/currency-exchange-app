@@ -137,7 +137,9 @@ export default function Navbar() {
           >
             topUp
           </li>
-          <li>cashOUT</li>
+          <li onClick={() => alert('this Feature is not yet avalaible')}>
+            cashOUT
+          </li>
         </ul>
       </div>
 

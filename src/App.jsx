@@ -86,7 +86,7 @@ function App() {
 
       for (const i of HOLDER) {
         if (i.sign === credentials.baseSign) {
-          i.amount += CASH;
+          i.amount += CASH / 2;
         }
       }
 
