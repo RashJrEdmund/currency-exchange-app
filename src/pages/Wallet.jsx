@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-alert */
 /* eslint-disable no-unused-expressions */
@@ -112,6 +113,7 @@ export default function Wallet() {
             <input
               type="number"
               step="any"
+              autoFocus
               id="inputID"
               placeholder="type in Amount To Convert"
               onChange={(e) => handleFormInputChange(+e.target.value)}
@@ -157,7 +159,7 @@ export default function Wallet() {
               )}
               <p className="sign">{sign} Balance</p>
               <div className="balance">
-                <p>{amount.toFixed(5)}</p>
+                <p>{amount}</p>
               </div>
               <button
                 type="button"
