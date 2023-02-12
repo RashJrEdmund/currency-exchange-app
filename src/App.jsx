@@ -66,8 +66,6 @@ function App() {
       baseSign: credentials.baseSign,
     });
 
-    console.log('this credentials', credentials);
-
     setAddedCurr([
       { sign: 'USD', amount: addedCurr[0].amount + Cash, id: 0 },
       { sign: 'XAF', amount: 0, id: 1 },
@@ -133,7 +131,6 @@ function App() {
               className={start === 0 ? 'container' : 'container activeform'}
               onSubmit={(e) => {
                 e.preventDefault();
-                console.clear();
                 handleFormCredentials(
                   e.target.elements.Name.value,
                   +e.target.elements.Amount.value

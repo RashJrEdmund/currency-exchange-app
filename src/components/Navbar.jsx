@@ -51,7 +51,6 @@ export default function Navbar() {
 
   const handleAddCurrency = (newCurr) => {
     // console.clear();
-    console.log('this credentials in handlecur()', credentials);
 
     for (const i of addedCurr) {
       if (i.sign.includes(newCurr)) {

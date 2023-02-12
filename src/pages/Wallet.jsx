@@ -24,7 +24,6 @@ export default function Wallet() {
   });
 
   const handleDelete = (ID, delBtnId, deletedAmount = 0) => {
-    console.log(delBtnId, deletedAmount, 'was cleard');
     const holder = addedCurr;
     const newHolder = holder.filter(({ id }) => id !== ID);
     setAddedCurr([...newHolder]);
@@ -60,16 +59,6 @@ export default function Wallet() {
   };
 
   const handleConversion = (currSign) => {
-    console.clear();
-    console.log(
-      'convert',
-      convertTo.amount,
-      'from',
-      convertTo.from,
-      'to',
-      currSign
-    );
-
     const holder = addedCurr;
 
     for (const i of holder) {
@@ -175,7 +164,7 @@ export default function Wallet() {
               )}
               <p className="sign">{sign} Balance</p>
               <div className="balance">
-                <p>{amount.toFixed(5)}</p>
+                <p>{amount.toFixed(3)}</p>
               </div>
               <button
                 type="button"
@@ -187,7 +176,6 @@ export default function Wallet() {
                     amount: convertTo.amount,
                     from: e.target.name,
                   });
-                  console.log(e.target.name, 'was click');
                 }}
               >
                 Convert To
