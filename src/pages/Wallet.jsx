@@ -60,6 +60,16 @@ export default function Wallet() {
   };
 
   const handleConversion = (currSign) => {
+    console.clear();
+    console.log(
+      'convert',
+      convertTo.amount,
+      'from',
+      convertTo.from,
+      'to',
+      currSign
+    );
+
     const holder = addedCurr;
 
     for (const i of holder) {
