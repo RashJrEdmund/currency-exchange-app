@@ -96,6 +96,12 @@ function App() {
     toggleTopUpForm();
   };
 
+  if (showForm) {
+    document.body.classList.add('hidden-body');
+  } else {
+    document.body.classList.remove('hidden-body');
+  }
+
   return (
     <MyContext.Provider
       value={{
