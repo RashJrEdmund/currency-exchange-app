@@ -71,6 +71,10 @@ function App() {
   ]);
 
   const handleFormCredentials = (sonNom, Cash) => {
+    if (Cash < 0) {
+      alert('Cannot topUP negative funds');
+      return;
+    }
     const FROM = credentials.baseSign;
 
     const CASH = (Cash / fetchResults[FROM]) * fetchResults[FROM];
