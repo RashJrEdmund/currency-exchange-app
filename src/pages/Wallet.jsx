@@ -54,6 +54,10 @@ export default function Wallet() {
   };
 
   const handleFormInputChange = (amnt) => {
+    if (amnt < 0) {
+      alert('Error! will not convert negative funds');
+      return;
+    }
     setConvertTo({
       amount: amnt,
       from: convertTo.from,
