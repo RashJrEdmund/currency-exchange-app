@@ -24,7 +24,7 @@ export default function Wallet() {
     from: credentials.baseSign,
   });
 
-  const handleDelete = (ID, delBtnId, deletedAmount = 0) => {
+  const handleDelete = (ID, delBtnSign, deletedAmount = 0) => {
     const holder = addedCurr;
     const newHolder = holder.filter(({ id }) => id !== ID);
     setAddedCurr([...newHolder]);
@@ -36,11 +36,20 @@ export default function Wallet() {
       // setAddedCurr(...Holder);
 
       setAddedCurr((prevCurr) => {
-        prevCurr[0].amount += deletedAmount;
+        // here i'm converting the deleted amount and adding it to the baseCurrency
+        for (const i of prevCurr) {
+          if (credentials.baseSign === i.sign) {
+            const RESULTS =
+              (deletedAmount / fetchResults[delBtnSign]) *
+              fetchResults[credentials.baseSign];
+
+            i.amount += RESULTS;
+          }
+        }
         return [...prevCurr];
       });
 
-      alert(`${delBtnId} card's amount added to default currency`);
+      alert(`${delBtnSign} card's amount added to default currency`);
     }
   };
 
@@ -55,21 +64,23 @@ export default function Wallet() {
     setShowForm((prev) => !prev);
     setConvertTo({
       amount: 0,
-      from: 'USD',
+      from: convertTo.amount,
     });
+    // setting converto.amount is very redundant
+  };
+
+  const handleUpdateInputValue = () => {
+    const HOLDER = addedCurr;
+
+    for (const i of HOLDER) {
+      if (i.sign === convertTo.from) {
+        document.getElementById('inputID').value = i.amount;
+        handleFormInputChange(i.amount);
+      }
+    }
   };
 
   const handleConversion = (currSign) => {
-    console.clear();
-    console.log(
-      'convert',
-      convertTo.amount,
-      'from',
-      convertTo.from,
-      'to',
-      currSign
-    );
-
     const holder = addedCurr;
 
     for (const i of holder) {
@@ -120,6 +131,13 @@ export default function Wallet() {
               alt="delet_card_button"
               onClick={toggleConvertForm}
             />
+            <button
+              className="take-all-btn"
+              type="button"
+              onClick={handleUpdateInputValue}
+            >
+              Convert All
+            </button>
             <input
               type="number"
               step="any"

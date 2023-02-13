@@ -86,10 +86,9 @@ function App() {
 
       for (const i of HOLDER) {
         if (i.sign === credentials.baseSign) {
-          i.amount += CASH / 2;
+          i.amount += CASH;
         }
       }
-      console.log('i rendered', HOLDER[0].amount);
 
       return [...HOLDER];
     });
@@ -125,7 +124,6 @@ function App() {
               className={start === 0 ? 'container' : 'container activeform'}
               onSubmit={(e) => {
                 e.preventDefault();
-                console.clear();
                 handleFormCredentials(
                   e.target.elements.Name.value,
                   +e.target.elements.Amount.value
