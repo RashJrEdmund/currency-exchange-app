@@ -44,13 +44,9 @@ function App() {
       .catch(() => {
         setFetchResulst(BackUpFetchData);
         alert('Unable to fetch data, check Internet connection and Try again');
+        alert('Resolving to BackUpData (BackUpData is not upToDate)');
       });
   }, []);
-
-  const [start, setStart] = React.useState(0);
-  setTimeout(() => {
-    setStart(1);
-  }, 500);
 
   const [credentials, setCredentials] = React.useState({
     name: 'userName',
@@ -86,13 +82,16 @@ function App() {
     });
 
     setAddedCurr(() => {
-      const HOLDER = addedCurr;
+      // const HOLDER = addedCurr;
+      // the mapping below is a super matured way of looping and adding CASH
 
-      for (const i of HOLDER) {
-        if (i.sign === credentials.baseSign) {
-          i.amount += CASH;
+      const HOLDER = addedCurr.map((cur) => {
+        if (cur.sign === credentials.baseSign) {
+          return { ...cur, amount: cur.amount + CASH };
         }
-      }
+
+        return cur;
+      });
 
       return [...HOLDER];
     });
@@ -125,7 +124,7 @@ function App() {
         {showForm && (
           <div className="modal-overlay">
             <form
-              className={start === 0 ? 'container' : 'container activeform'}
+              className="container"
               onSubmit={(e) => {
                 e.preventDefault();
                 handleFormCredentials(

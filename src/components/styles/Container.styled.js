@@ -25,7 +25,21 @@ const StyledContainer = styled.div`
     justify-content: center;
     z-index: 4;
 
+    @keyframes convertToAnim {
+      from {
+        bottom: -120%;
+        transform: rotate(0);
+      }
+      to {
+        bottom: 0;
+        transform: rotate(360deg);
+      }
+    }
+
     .wallet-form {
+      animation-name: convertToAnim;
+      animation-duration: 0.55s;
+
       position: relative;
       background-color: #000000a2;
       color: #fff;

@@ -30,23 +30,22 @@ export default function Wallet() {
     setAddedCurr([...newHolder]);
 
     if (deletedAmount > 0) {
-      // const Holder = addedCurr;
-
-      // Holder[0].amount += deletedAmount;
-      // setAddedCurr(...Holder);
-
       setAddedCurr((prevCurr) => {
         // here i'm converting the deleted amount and adding it to the baseCurrency
-        for (const i of prevCurr) {
-          if (credentials.baseSign === i.sign) {
+
+        const HOLDER = prevCurr.map((curr) => {
+          if (credentials.baseSign === curr.sign) {
             const RESULTS =
               (deletedAmount / fetchResults[delBtnSign]) *
               fetchResults[credentials.baseSign];
 
-            i.amount += RESULTS;
+            return { ...curr, amount: curr.amount + RESULTS };
           }
-        }
-        return [...prevCurr];
+
+          return curr;
+        });
+
+        return [...HOLDER];
       });
 
       alert(`${delBtnSign} card's amount added to default currency`);

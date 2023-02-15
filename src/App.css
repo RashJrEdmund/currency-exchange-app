@@ -40,7 +40,20 @@ body {
   cursor: not-allowed;
 }
 
+@keyframes landingForm {
+  from {
+    top: -120%;
+  }
+  to {
+    top: 0;
+  }
+}
+
 .modal-overlay .container {
+  animation-name: landingForm;
+  animation-duration: 0.75s;
+
+  position: relative;
   background-color: #000000a2;
   color: #fff;
   display: flex;
@@ -52,13 +65,8 @@ body {
   padding: 10px 10px 80px;
   border: none;
   border-radius: 10px;
-  transform: translateY(-1000%);
   cursor: default;
   transition: 0.5s;
-}
-
-.modal-overlay .activeform {
-  transform: translateY(0);
 }
 
 .modal-overlay .container .app-done-btn {
