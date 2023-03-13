@@ -20,23 +20,17 @@ export default function Navbar() {
     addedCurr,
     setAddedCurr,
     toggleTopUpForm,
+    openMenu,
+    setOpenMenu,
   } = React.useContext(MyContext);
-  const [open, setOpen] = React.useState(false);
   const [icon, setIcon] = React.useState(menuIcon);
 
   const toggleNavAndBtn = () => {
-    setOpen((prev) => !prev);
-    setIcon(open ? menuIcon : closeMenu);
+    setOpenMenu((prev) => !prev);
+    setIcon(openMenu ? menuIcon : closeMenu);
   };
 
   const handleChangeDefault = (e) => {
-    // console.log('handleChangeDefault entered');
-    // const prevCred = credentials;
-    // prevCred.baseSign = e;
-    // console.log('this prev', prevCred);
-    // console.log('this credentials b4 setCre', credentials);
-    // setCredentials(prevCred);
-
     const from = credentials.baseSign;
     const AMT = credentials.balance;
 
@@ -91,11 +85,13 @@ export default function Navbar() {
         </p>
       </div>
       <div
-        className={open ? 'active-ul-container ul-container' : 'ul-container'}
+        className={
+          openMenu ? 'active-ul-container ul-container' : 'ul-container'
+        }
       >
-        <ul className={open ? 'ul' : 'ul active-ul'}>
+        <ul className={openMenu ? 'ul' : 'ul active-ul'}>
           <img
-            className={open ? 'menu-btn active-menu-btn' : 'menu-btn'}
+            className={openMenu ? 'menu-btn active-menu-btn' : 'menu-btn'}
             src={icon}
             alt="menu_icon "
             onClick={() => {
@@ -142,36 +138,6 @@ export default function Navbar() {
           </li>
         </ul>
       </div>
-
-      {/* {credentials.name === 'userName' && (
-        <div className="modal-overlay">
-          <form
-            className={start === 0 ? 'container' : 'container activeform'}
-            onSubmit={(e) => {
-              e.preventDefault();
-              console.clear();
-              handleFormCredentials(
-                e.target.elements.Name.value,
-                e.target.elements.Amount.value
-              );
-            }}
-          >
-            <button className="delet-popUp" type="submit">
-              ADD+
-            </button>
-
-            <label htmlFor="Name">Name:</label>
-            <input type="text" id="Name" placeholder="Enter UserName" />
-
-            <label htmlFor="Amount">Enter amount to topUP In USD:</label>
-            <input
-              type="number"
-              id="Amount"
-              placeholder="EnterAmount to topUP in USD"
-            />
-          </form>
-        </div>
-      )} */}
     </StyledNavBar>
   );
 }

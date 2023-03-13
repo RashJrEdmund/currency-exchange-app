@@ -43,8 +43,9 @@ function App() {
       })
       .catch(() => {
         setFetchResulst(BackUpFetchData);
-        alert('Unable to fetch data, check Internet connection and Try again');
-        alert('Resolving to BackUpData (BackUpData is not upToDate)');
+        alert(
+          'Unable to fetch data Resolving to BackUpData (BackUpData is not upToDate)'
+        );
       });
   }, []);
 
@@ -65,6 +66,8 @@ function App() {
     { sign: 'XAF', amount: 0, id: 1 },
     { sign: 'EUR', amount: 0, id: 2 },
   ]);
+
+  const [openMenu, setOpenMenu] = React.useState(false);
 
   const handleFormCredentials = (sonNom, Cash) => {
     if (Cash < 0) {
@@ -118,6 +121,9 @@ function App() {
 
         fetchKeys,
         toggleTopUpForm,
+
+        openMenu,
+        setOpenMenu,
       }}
     >
       <div className="App">

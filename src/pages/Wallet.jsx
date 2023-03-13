@@ -15,7 +15,7 @@ import delIcon from '../images/close menu icon.png';
 import MyContext from '../Context';
 
 export default function Wallet() {
-  const { fetchResults, credentials, addedCurr, setAddedCurr } =
+  const { fetchResults, credentials, addedCurr, setAddedCurr, setOpenMenu } =
     React.useContext(MyContext);
 
   const [showForm, setShowForm] = React.useState(false);
@@ -198,6 +198,7 @@ export default function Wallet() {
                 name={sign}
                 onClick={(e) => {
                   toggleConvertForm();
+                  setOpenMenu(false);
                   setConvertTo({
                     amount: convertTo.amount,
                     from: e.target.name,
