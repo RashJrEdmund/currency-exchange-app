@@ -1,10 +1,8 @@
 /* eslint-disable no-restricted-syntax */
-/* eslint-disable no-alert */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable no-param-reassign */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable no-alert */
 import React from 'react';
 import StyledNavBar from './styles/StyledNavBar';
 import MyContext from '../Context';
@@ -36,7 +34,8 @@ export default function Navbar() {
 
     const RESULTS = (AMT / fetchResults[from]) * fetchResults[e];
 
-    setCredentials((prevCred) => {
+    setCredentials((prev) => {
+      const prevCred = prev;
       prevCred.baseSign = e;
       prevCred.balance = RESULTS;
       return prevCred;
