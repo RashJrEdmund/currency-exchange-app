@@ -50,9 +50,9 @@ const StyledNavBar = styled.nav`
         position: absolute;
         left: 0;
         top: 0;
-        height: 70px;
-        width: 70px;
-        margin: 20px 10px 0;
+        height: 40px;
+        width: 40px;
+        margin: 20px 10px 0 20px;
         cursor: pointer;
         transition: 0.5s;
       }
@@ -117,8 +117,6 @@ const StyledNavBar = styled.nav`
 
       .ul {
         .menu-btn {
-          height: 50px;
-          width: 50px;
           margin: 20px 15px 0 0;
           transform: translateX(-120%);
         }

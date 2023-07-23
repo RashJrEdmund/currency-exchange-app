@@ -34,12 +34,11 @@ export default function Navbar() {
 
     const RESULTS = (AMT / fetchResults[from]) * fetchResults[e];
 
-    setCredentials((prev) => {
-      const prevCred = prev;
-      prevCred.baseSign = e;
-      prevCred.balance = RESULTS;
-      return prevCred;
-    });
+    setCredentials((prevCred) => ({
+      ...prevCred,
+      baseSign: e,
+      balance: RESULTS,
+    }));
   };
 
   const handleAddCurrency = (newCurr) => {
@@ -80,7 +79,6 @@ export default function Navbar() {
         </p>
         <p>
           DefaultTotal: {credentials.balance} {credentials.baseSign}
-          {/* {credentials.balance > 700000 ? " c'mon bruh! 😹, Really?" : ''} */}
         </p>
       </div>
       <div
