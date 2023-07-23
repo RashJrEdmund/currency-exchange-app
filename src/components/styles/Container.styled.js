@@ -28,11 +28,9 @@ const StyledContainer = styled.div`
     @keyframes convertToAnim {
       from {
         bottom: -120%;
-        transform: rotate(0);
       }
       to {
         bottom: 0;
-        transform: rotate(360deg);
       }
     }
 

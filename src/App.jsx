@@ -1,14 +1,13 @@
-/* eslint-disable no-alert */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable no-restricted-syntax */
 /* eslint-disable react/jsx-no-constructed-context-values */
+/* eslint-disable no-alert */
 import './App.css';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Wallet from './pages/Wallet';
 import MyContext from './Context';
 import Navbar from './components/Navbar';
 
 import Fetchdata, { BackUpFetchData } from './data/Fetchdata';
+import Form from './components/Form';
 
 function App() {
   const [fetchResults, setFetchResulst] = React.useState({
@@ -43,8 +42,9 @@ function App() {
       })
       .catch(() => {
         setFetchResulst(BackUpFetchData);
-        alert('Unable to fetch data, check Internet connection and Try again');
-        alert('Resolving to BackUpData (BackUpData is not upToDate)');
+        alert(
+          'Unable to fetch data Resolving to BackUpData (BackUpData is not upToDate)'
+        );
       });
   }, []);
 
@@ -65,6 +65,8 @@ function App() {
     { sign: 'XAF', amount: 0, id: 1 },
     { sign: 'EUR', amount: 0, id: 2 },
   ]);
+
+  const [openMenu, setOpenMenu] = React.useState(false);
 
   const handleFormCredentials = (sonNom, Cash) => {
     if (Cash < 0) {
@@ -99,11 +101,13 @@ function App() {
     toggleTopUpForm();
   };
 
-  if (showForm) {
-    document.body.classList.add('hidden-body');
-  } else {
-    document.body.classList.remove('hidden-body');
-  }
+  useEffect(() => {
+    if (showForm) {
+      document.body.classList.add('hidden-body');
+    } else {
+      document.body.classList.remove('hidden-body');
+    }
+  }, [showForm]);
 
   return (
     <MyContext.Provider
@@ -118,49 +122,13 @@ function App() {
 
         fetchKeys,
         toggleTopUpForm,
+
+        openMenu,
+        setOpenMenu,
       }}
     >
       <div className="App">
-        {showForm && (
-          <div className="modal-overlay">
-            <form
-              className="container"
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleFormCredentials(
-                  e.target.elements.Name.value,
-                  +e.target.elements.Amount.value
-                );
-              }}
-            >
-              <button className="app-done-btn" type="submit">
-                Done
-              </button>
-
-              <p>Confirm Credentials</p>
-              <label htmlFor="Name">Name:</label>
-              <input
-                type="text"
-                id="Name"
-                placeholder="Enter UserName"
-                defaultValue={
-                  credentials.name === 'userName' ? undefined : credentials.name
-                }
-                required
-              />
-
-              <label htmlFor="Amount">
-                Enter amount to topUP In {credentials.baseSign}:
-              </label>
-              <input
-                type="number"
-                step="any"
-                id="Amount"
-                placeholder={`EnterAmount to topUP in ${credentials.baseSign}`}
-              />
-            </form>
-          </div>
-        )}
+        {showForm && <Form handleFormCredentials={handleFormCredentials} />}
 
         <Navbar />
         <Wallet />
